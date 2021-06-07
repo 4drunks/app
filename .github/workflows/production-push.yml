@@ -1,0 +1,130 @@
+name: Production
+
+on:
+  push:
+    branches: [prod]
+
+jobs:
+  android:
+    name: Build android
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Git clone
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          check-latest: true
+
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo '::set-output name=dir::$(npm config get cache)'
+
+      - name: npm cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Setup Expo
+        uses: expo/expo-github-action@v5
+        with:
+          expo-version: 4.x
+          expo-token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Dependencies
+        run: npm install
+
+      - name: APK
+        run: expo build:android --type apk
+
+      - name: App Bundle
+        run: expo build:android --type app-bundle
+  ios:
+    name: Build iOS
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Git clone
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          check-latest: true
+
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo '::set-output name=dir::$(npm config get cache)'
+
+      - name: npm cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Setup Expo
+        uses: expo/expo-github-action@v5
+        with:
+          expo-version: 4.x
+          expo-token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Dependencies
+        run: npm install
+
+      - name: Store
+        run: expo build:ios --type archive
+
+      - name: Simulator
+        run: expo build:ios --type simulator
+  web:
+    name: Build website
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Git clone
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          check-latest: true
+
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo '::set-output name=dir::$(npm config get cache)'
+
+      - name: npm cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Setup Expo
+        uses: expo/expo-github-action@v5
+        with:
+          expo-version: 4.x
+          expo-token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Dependencies
+        run: npm install
+
+      - name: Website
+        run: expo build:web
