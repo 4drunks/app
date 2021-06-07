@@ -7,7 +7,9 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "prepare": "husky install",
-    "test": "echo 'Not yet implemented'"
+    "test": "echo 'Not yet implemented'",
+    "commitlint-edit": "commitlint --edit $1",
+    "commitlint": "commitlint --to HEAD"
   },
   "dependencies": {
     "expo": "~41.0.1",
@@ -19,10 +21,12 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
-    "typescript": "~4.0.0",
-    "husky": "^6.0.0"
+    "husky": "^6.0.0",
+    "typescript": "~4.0.0"
   },
   "private": true
 }
