@@ -5,7 +5,9 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "prepare": "husky install",
+    "test": "echo 'Not yet implemented'"
   },
   "dependencies": {
     "expo": "~41.0.1",
@@ -19,7 +21,8 @@
     "@babel/core": "^7.9.0",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
-    "typescript": "~4.0.0"
+    "typescript": "~4.0.0",
+    "husky": "^6.0.0"
   },
   "private": true
 }
